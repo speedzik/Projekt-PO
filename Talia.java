@@ -3,15 +3,9 @@ import java.util.Random;
 import java.util.Collections;
 public class Talia {
 
-
-
     private ArrayList<Karta> myTalia = new ArrayList<>();
     private int liczbaKart;
-
-    public Talia(){
-        this(1,false);
-    }
-
+    private ArrayList<Karta> taliaOdrzuconych = new ArrayList<>();
     public Talia(int liczbaTalii, boolean czyPrzetasowane) {
 
         this.liczbaKart = liczbaTalii * 52;
@@ -26,29 +20,32 @@ public class Talia {
                 }
             }
         }
+        if (czyPrzetasowane) {
+            this.przetasuj();
+        }
     }
 
-//    public void przetasuj() {
-//        Random rng = new Random();
-//        ArrayList<Karta> tmpTalia = new ArrayList<Karta>();
-//        int m = 0;
-//        int oryginalnyrozmiar = this.liczbaKart;
-//        for (int i = 0; i < oryginalnyrozmiar; i++) {
-//            m = rng.nextInt(this.liczbaKart);
-//            tmpTalia.add(this.myTalia.get(m));
-//            this.myTalia.remove(m);
-//        }
-//        this.myTalia = tmpTalia;
+    public void przetasuj() {
+        Random rng = new Random();
+        Karta temp;
+        int m;
+        for (int i = 0; i < this.liczbaKart; i++) {
+            m = rng.nextInt(this.liczbaKart);
+            temp = this.myTalia.get(i);
+            this.myTalia.set(i,this.myTalia.get(m));
+            this.myTalia.set(m,temp);
+        }
+    }
+
+//    public ArrayList<Karta> shuffle() {
+//        Collections.shuffle(myTalia);
+//        return myTalia;
 //    }
-
-    public ArrayList<Karta> shuffle() {
-        Collections.shuffle(myTalia);
-        return myTalia;
-    }
 
     public Karta rozdajKolejnaKarte() {
         Karta kartazGory = this.myTalia.get(0);
         this.myTalia.remove(0);
+        liczbaKart--;
         return kartazGory;
     }
 
@@ -57,4 +54,12 @@ public class Talia {
             System.out.println(i+1 + "/" + this.liczbaKart + " " + this.myTalia.get(i).toString());
         }
     }
+
+    public int getLiczbaKart(){
+        return liczbaKart;
+    }
+
+    
+
+
 }
