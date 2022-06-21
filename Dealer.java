@@ -1,17 +1,32 @@
 import java.util.ArrayList;
-public class Dealer extends Gracz{
-    private ArrayList<Karta> reka = new ArrayList<Karta>();
+public class Dealer extends Uczestnik{
+    private ArrayList<Karta> reka = new ArrayList<>();
     public Dealer(){
-        ArrayList<Karta> reka;
     }
-    public ArrayList<String> pokazRekeDealera() {
+    public ArrayList<String> pokazReke(boolean czykoniec) {
         ArrayList<String> rekaDString = new ArrayList<>();
         System.out.println("karty dealera: ");
-//        rekaDString.add(0,"UKRYTA");
-        for (int i = 0; i < this.reka.size(); i++) {
-            rekaDString.add(i, reka.get(i).toString());
+        if (!czykoniec) {
+            rekaDString.add(0, "UKRYTA");
+            for (int i = 1; i < this.reka.size(); i++) {
+                rekaDString.add(i, reka.get(i).toString());
+            }
+        } else {
+            for (int i = 0; i < this.reka.size(); i++) {
+                rekaDString.add(i, reka.get(i).toString());
+            }
         }
-        return rekaDString;
+       return rekaDString;
+    }
+
+    public Karta dodajKarte(Karta bjKarta) {
+        if(this.numKart == 10) {
+            System.err.print("Za duzo kart!");
+            System.exit(1);
+        }
+        this.reka.add(bjKarta);
+        this.numKart++;
+        return bjKarta;
     }
 
 

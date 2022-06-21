@@ -1,30 +1,11 @@
 import java.util.ArrayList;
-import java.util.Random;
 
-
-public class Gracz extends Uczestnik{
-    private String imie;
+public abstract class Uczestnik {
     private ArrayList<Karta> reka = new ArrayList<Karta>(10);
     protected int numKart;
-    private int parametr_reki;
 
-    private int parametr_stolu;
+    private String imie;
 
-    private int bank = 0;
-
-    private int sumaMocy = 0;
-
-    public Gracz(){
-
-    }
-
-    public Gracz(String imie) {
-        Random rpg = new Random();
-        this.imie = imie;
-        this.parametr_reki = rpg.nextInt(21 - 15) + 15;
-//        this.wyczyscReke();
-        this.parametr_stolu = rpg.nextInt(5 - (-1)) + (-1);
-    }
 
     public void wyczyscReke() {
         if (this.reka.size() != 0) {
@@ -34,7 +15,6 @@ public class Gracz extends Uczestnik{
             this.numKart = 0;
         }
     }
-
     public Karta dodajKarte(Karta bjKarta) {
         if(this.numKart == 10) {
             System.err.print("Za duzo kart!");
@@ -45,11 +25,19 @@ public class Gracz extends Uczestnik{
         return bjKarta;
     }
 
+    public void spalKarty(){
+        for (int i = 0; i < this.reka.size(); i++) {
+            this.reka.remove(i);
+        }
+    }
+
     public int getSumaReki() {
         int sumaReki = 0;
         int wartoscKarty;
         int liczbaAsow = 0;
-
+        if(numKart <= 0){
+            return 0;
+        }
         for (int i = 0; i < this.numKart; i++) {
             wartoscKarty = this.reka.get(i).getWartosc();
 
@@ -67,17 +55,12 @@ public class Gracz extends Uczestnik{
             liczbaAsow--;
         }
         if (sumaReki == 21){
-            System.out.println("BlackJack!");
-            wygrana();
-        }
-        else if (sumaReki > 21 && liczbaAsow == 0){
-            przegrana();
-            System.out.println("Za dużo!");
-            spalKarty();
+            System.out.println("Black Jack!");
         }
 
         return sumaReki;
     }
+
     public ArrayList<String> pokazRekeGracza() {
         ArrayList<String> rekaString = new ArrayList<>();
         System.out.println("karty gracza " + this.imie + ": ");
@@ -87,52 +70,25 @@ public class Gracz extends Uczestnik{
         return rekaString;
     }
 
+    public int getMocReki() {
+        int mocReki = 0;
+        for (int i = 0; i < numKart; i++) {
+            mocReki += reka.get(i).getMoc();
+        }
+        return mocReki;
+    }
+
     public int getSumaMocy(ArrayList<Karta> reka){
+        int sumaMocy = 0;
         for (int i = 0; i < this.numKart; i++) {
             sumaMocy += this.reka.get(i).getMoc();
         }
         return sumaMocy;
     }
 
-    public int getParametr_reki(){
-        return parametr_reki;
-    }
-    public boolean czyParametr_RekiZgodny() {
-        return this.getSumaReki() <= parametr_reki;
+    public ArrayList<Karta> getReka(){
+        return this.reka;
     }
 
-    public void setImie(String imie) {
-        this.imie = imie;
-    }
 
-//    public int getMocReki(int mocReki) {
-//        mocReki = 0;
-//        for (int i = 0; i < 10; i++) {
-//            mocReki += this.reka.get(i).getMoc();
-//        }
-//        return mocReki;
-//    }
-
-    public int wygrana() {
-        bank += 150;
-        System.out.println(this.imie + " wygrał");
-        return bank;
-    }
-
-    public int przegrana() {
-        bank -= 100;
-        System.out.println(this.imie + " przegrał/a");
-        return bank;
-    }
-
-    public int getBank() {
-        return bank;
-    }
-
-    public int getParametr_stolu() {
-        return parametr_stolu;
-    }
-    public String getImie(){
-        return imie;
-    }
 }

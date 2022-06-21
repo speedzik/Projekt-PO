@@ -4,19 +4,18 @@ import java.util.Collections;
 public class Talia {
 
     private ArrayList<Karta> myTalia = new ArrayList<>();
-    private int liczbaKart;
-    private ArrayList<Karta> taliaOdrzuconych = new ArrayList<>();
+    public int liczbaKart;
+
     public Talia(int liczbaTalii, boolean czyPrzetasowane) {
 
-        this.liczbaKart = liczbaTalii * 52;
-        this.myTalia = new ArrayList<Karta>(this.liczbaKart);
-        int n = 0;
+        liczbaKart = liczbaTalii * 52;
+        myTalia = new ArrayList<Karta>(this.liczbaKart);
+
 
         for (int j = 0; j < liczbaTalii; j++) {
             for (int i = 0; i < 4; i++) {
                 for (int k = 1; k <= 13 ; k++) {
-                    this.myTalia.add(new Karta(Kolory.values()[i],k));
-                    n++;
+                    myTalia.add(new Karta(Kolory.values()[i],k));
                 }
             }
         }
@@ -31,9 +30,9 @@ public class Talia {
         int m;
         for (int i = 0; i < this.liczbaKart; i++) {
             m = rng.nextInt(this.liczbaKart);
-            temp = this.myTalia.get(i);
-            this.myTalia.set(i,this.myTalia.get(m));
-            this.myTalia.set(m,temp);
+            temp = myTalia.get(i);
+            myTalia.set(i,myTalia.get(m));
+            myTalia.set(m,temp);
         }
     }
 
@@ -43,14 +42,14 @@ public class Talia {
 //    }
 
     public Karta rozdajKolejnaKarte() {
-        Karta kartazGory = this.myTalia.get(0);
-        this.myTalia.remove(0);
+        Karta kartazGory = myTalia.get(0);
+        myTalia.remove(0);
         liczbaKart--;
         return kartazGory;
     }
 
-    public void printDeck(int numToPrint){
-        for (int i = 0; i < numToPrint; i++) {
+    public void printDeck(){
+        for (int i = 0; i < liczbaKart; i++) {
             System.out.println(i+1 + "/" + this.liczbaKart + " " + this.myTalia.get(i).toString());
         }
     }
@@ -58,8 +57,6 @@ public class Talia {
     public int getLiczbaKart(){
         return liczbaKart;
     }
-
-    
 
 
 }

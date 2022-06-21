@@ -6,6 +6,7 @@ public class Karta {
     public Karta(Kolory bjkolor, int bjwartosc) {
         this.kolor = bjkolor;
         this.wartosc = bjwartosc;
+        this.moc = getMoc();
 
     }
 
@@ -36,7 +37,7 @@ public class Karta {
 
     public int getMoc() {
         int mocInt = 0;
-        switch (this.moc){
+        switch (this.wartosc){
             case 1 -> mocInt = -1;
             case 2 -> mocInt = 1;
             case 3 -> mocInt = 1;
@@ -45,12 +46,13 @@ public class Karta {
             case 6 -> mocInt = 0;
             case 7 -> mocInt = 0;
             case 8 -> mocInt = 0;
-            case 9 -> mocInt = 0;
+            case 9 -> mocInt = -1;
             case 10 -> mocInt = -1;
             case 11 -> mocInt = -1;
             case 12 -> mocInt = -1;
             case 13 -> mocInt = -1;
-        }return mocInt;
+        }
+        return mocInt;
     }
 
 }
